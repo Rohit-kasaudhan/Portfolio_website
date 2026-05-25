@@ -210,17 +210,14 @@ Deployed on:
 # 📸 Screenshots
 
 > <img width="1919" height="948" alt="image" src="https://github.com/user-attachments/assets/f1d547ab-e6e9-41f4-a0b0-c2fc4b9ae9a1" />
-AGENT-<img width="212" height="161" alt="image" src="https://github.com/user-attachments/assets/92b6bd60-9830-406c-90d3-d57b51f45832" />
-<img width="331" height="570" alt="image" src="https://github.com/user-attachments/assets/7c0174dd-30b9-4681-b8c5-35d5c5f25dc4" />
-<img width="1919" height="948" alt="image" src="https://github.com/user-attachments/assets/deb83ba8-9fc6-4571-89c9-0b915ad6c3c8" />
+**AGENT**
+><img width="212" height="161" alt="image" src="https://github.com/user-attachments/assets/92b6bd60-9830-406c-90d3-d57b51f45832" />
+> <img width="331" height="570" alt="image" src="https://github.com/user-attachments/assets/7c0174dd-30b9-4681-b8c5-35d5c5f25dc4" />
+> <img width="1919" height="948" alt="image" src="https://github.com/user-attachments/assets/deb83ba8-9fc6-4571-89c9-0b915ad6c3c8" />
 
 
 
 
-```md
-![Home Page](./screenshots/home.png)
-![Chatbot](./screenshots/chatbot.png)
-```
 
 
 
