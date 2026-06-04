@@ -242,7 +242,7 @@ function App() {
           <p className="hero-sub">AI/ML Developer &amp; Computer Science Student at KIIT</p>
           <div className="hero-btns">
             <a className="btn-primary" href="#work" onClick={(e) => handleAnchorClick(e, '#work')}>Explore Portfolio &#8594;</a>
-            <a className="btn-ghost hero-btn-resume" href="https://drive.google.com/file/d/1DKam_WIf827Ise-tznI5jaURlvZ12QwY/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
+            <a className="btn-ghost hero-btn-resume" href="https://drive.google.com/file/d/1RMc6C-NpUBEO_CSJQDNbXgLFEnCcrsXS/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
           </div>
           <div className="hero-stats">
             <div className="stat"><div className="num">10+</div><div className="lbl">Projects Done</div></div>
