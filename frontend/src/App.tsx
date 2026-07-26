@@ -10,6 +10,49 @@ function App() {
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const [formResult, setFormResult] = useState<string>('');
+  const [formStatus, setFormStatus] = useState<'success' | 'error' | ''>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setFormResult('');
+    setFormStatus('');
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const object = Object.fromEntries(formData.entries());
+    const json = JSON.stringify(object);
+
+    try {
+      const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${backendUrl}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: json
+      });
+
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setFormResult("Message sent successfully! I will reach out to you soon. 🚀");
+        setFormStatus("success");
+        form.reset();
+      } else {
+        setFormResult(data.message || "Failed to send message. Please try again. ❌");
+        setFormStatus("error");
+      }
+    } catch (error) {
+      console.error("Web3Forms Submission Error:", error);
+      setFormResult("An error occurred. Please check your connection and try again. ❌");
+      setFormStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // 1. Navigation Scrolled Background Effect
   useEffect(() => {
@@ -405,9 +448,57 @@ function App() {
           <div className="section-label">Let&rsquo;s Collaborate</div>
           <h2 className="cta-title">Ready to Build<br />Something <span>Great?</span></h2>
           <p className="cta-sub">I&rsquo;m currently available for internships, open-source projects, and collaborative research. Let&rsquo;s connect and build intelligent solutions.</p>
-          <a className="btn-primary" href="https://www.linkedin.com/in/rohit-kasaudhan" target="_blank" rel="noopener noreferrer" style={{ margin: '0 auto' }}>Get In Touch &#8594;</a>
-          <br />
-          <a className="cta-email" href="mailto:ksdrohit28@gmail.com">&#9993;&nbsp; ksdrohit28@gmail.com</a>
+          <form onSubmit={handleFormSubmit} className="cta-form">
+            <div className="form-row">
+              <div className="form-group">
+                <input 
+                  type="text" 
+                  name="name" 
+                  placeholder="Your Name" 
+                  required 
+                  className="form-input" 
+                  disabled={isSubmitting}
+                />
+              </div>
+              <div className="form-group">
+                <input 
+                  type="email" 
+                  name="email" 
+                  placeholder="Your Email" 
+                  required 
+                  className="form-input" 
+                  disabled={isSubmitting}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <textarea 
+                name="message" 
+                placeholder="Your Message" 
+                required 
+                className="form-textarea" 
+                rows={5}
+                disabled={isSubmitting}
+              ></textarea>
+            </div>
+            <button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="btn-primary form-submit"
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message ⚡'}
+            </button>
+            {formResult && (
+              <div className={`form-result ${formStatus}`}>
+                {formResult}
+              </div>
+            )}
+          </form>
+          <div className="cta-links">
+            <a className="cta-link-item" href="https://www.linkedin.com/in/rohit-kasaudhan" target="_blank" rel="noopener noreferrer">LinkedIn &rarr;</a>
+            <span className="separator">•</span>
+            <a className="cta-email" href="mailto:ksdrohit28@gmail.com">&#9993;&nbsp; ksdrohit28@gmail.com</a>
+          </div>
         </div>
       </section>
 
