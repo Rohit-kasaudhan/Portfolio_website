@@ -10,7 +10,6 @@ from pydantic import BaseModel
 import google.generativeai as genai
 from supabase import create_client, Client
 from dotenv import load_dotenv
-import httpx
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -128,38 +127,6 @@ def build_prompt(query: str, context: str, history: List[ChatMessage] = None) ->
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "message": "FastAPI is running and ready."}
-
-class ContactRequest(BaseModel):
-    name: str
-    email: str
-    message: str
-
-@app.post("/api/contact")
-async def contact_submit(request: ContactRequest):
-    """Proxy contact form submissions to Web3Forms to bypass browser adblockers."""
-    logger.info(f"Received contact submission from {request.email}")
-    try:
-        async with httpx.AsyncClient() as client:
-            payload = {
-                "access_key": "ab735285-0a84-4673-9654-93e9739aa1f5",
-                "name": request.name,
-                "email": request.email,
-                "message": request.message
-            }
-            response = await client.post(
-                "https://api.web3forms.com/submit",
-                json=payload,
-                headers={"Accept": "application/json"}
-            )
-            data = response.json()
-            if response.status_code == 200 and data.get("success"):
-                return {"success": True, "message": "Message sent successfully!"}
-            else:
-                logger.error(f"Web3Forms API error response: {data}")
-                return {"success": False, "message": data.get("message", "Failed to submit form to Web3Forms.")}
-    except Exception as e:
-        logger.error(f"Error forwarding contact request: {e}")
-        raise HTTPException(status_code=500, detail=f"Failed to forward message: {str(e)}")
 
 @app.post("/api/chat")
 async def chat(request: ChatRequest):

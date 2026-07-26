@@ -23,11 +23,11 @@ function App() {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const object = Object.fromEntries(formData.entries());
+    object.access_key = "ab735285-0a84-4673-9654-93e9739aa1f5";
     const json = JSON.stringify(object);
 
     try {
-      const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const response = await fetch(`${backendUrl}/api/contact`, {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
